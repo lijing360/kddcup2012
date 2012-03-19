@@ -25,6 +25,7 @@ int parse()
 	fclose(o);
 	return 0;
 }
+
 int main()
 {
 	return 0;
