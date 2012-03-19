@@ -4,7 +4,7 @@ struct T
 	int adid, qid, uid;
 	int click, imp;
 };
-int main()
+int parse()
 {
 	FILE *i = fopen("i", "r");
 	FILE *o = fopen("o", "w");
@@ -23,5 +23,9 @@ int main()
 	}
 	fclose(i);
 	fclose(o);
+	return 0;
+}
+int main()
+{
 	return 0;
 }
