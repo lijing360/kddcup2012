@@ -1,4 +1,4 @@
-#sort by $3 desc firstly
+#sort by $3 asc firstly
 BEGIN{
 f0=-1
 }
