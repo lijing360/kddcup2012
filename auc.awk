@@ -1,4 +1,7 @@
 #sort by $3 desc firstly
+BEGIN{
+f0=-1
+}
 {
 if($3!=f0){
 	auc+=(x-x0)*(y+y0);
