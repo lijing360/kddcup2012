@@ -19,7 +19,9 @@ CC = nice g++
 #  Here we list all the cpp files we want to compile
 
 SRC = main.cpp
-#SRC += /home/af/ytwang/dlib-17.45/dlib/all/source.cpp
+SRC += rep.cpp
+SRC += naive_bay.cpp
+SRC += /home/af/ytwang/dlib-17.45/dlib/all/source.cpp
 
 ####################################################
 
