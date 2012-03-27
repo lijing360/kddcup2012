@@ -19,6 +19,7 @@ struct PredictorBase
 {
 	virtual void update(const T&) = 0;
 	virtual double predict(const T&) = 0;
+	virtual ~PredictorBase(){}
 	void run();
 };
 
