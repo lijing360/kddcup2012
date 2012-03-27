@@ -5,33 +5,8 @@ void NaiveBay::update(const T& t)
 	u[t.uid].first += t.click; u[t.uid].second += t.imp;
 	a[t.adid].first += t.click; a[t.adid].second += t.imp;
 	q[t.qid].first += t.click; q[t.qid].second += t.imp;
-	//mem ctrl
 	if (++count.first % 1000000 == 0)
-	{
-		if (u.size() + q.size() > 22000000)
-		{
-			II2::iterator tmp, it;
-			for (it = u.begin(); it != u.end();)
-			{
-				if(it->second.second < 3)
-				{
-					tmp = it;
-					++it;
-					u.erase(tmp);
-				}else ++it;
-			}
-			for (it = q.begin(); it != q.end();)
-			{
-				if(it->second.second < 3)
-				{
-					tmp = it;
-					++it;
-					q.erase(tmp);
-				}else ++it;
-			}
-		}
 		fprintf(stderr, "%dM: u=%lu q=%lu\n", count.first/1000000, u.size(), q.size());
-	}
 }
 
 double NaiveBay::predict(const T& t)

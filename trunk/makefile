@@ -5,7 +5,7 @@
 TARGET = kdd
 
 # these are the compile time flags passed to gcc
-CFLAGS = -ggdb  -DDEBUG -DDLIB_NO_GUI_SUPPORT  -I /home/af/ytwang/dlib-17.45/  -Wall
+CFLAGS = -ggdb  -DDEBUG -DDLIB_NO_GUI_SUPPORT  -I /export/kdd/dlib-17.45/  -Wall
 
 # These are the link time flags passed to gcc
 LFLAGS = -lpthread   -lnsl 
@@ -21,7 +21,7 @@ CC = nice g++
 SRC = main.cpp
 SRC += rep.cpp
 SRC += naive_bay.cpp
-SRC += /home/af/ytwang/dlib-17.45/dlib/all/source.cpp
+SRC += /export/kdd/dlib-17.45/dlib/all/source.cpp
 
 ####################################################
 
