@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <map>
+#include <dlib/static_map.h>
+
 struct T
 {
 	int adid, qid, uid;
@@ -14,6 +16,16 @@ typedef std::map<int, I2> II2;
 
 void sample_parse();
 void sample_split();
+void repo_save();
+void repo_dump();
+
+struct User_Repo : public dlib::static_map<int, int>
+{
+};
+
+struct Token_Repo
+{
+};
 
 struct PredictorBase
 {
