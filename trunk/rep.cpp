@@ -2,9 +2,9 @@
 #include <dlib/string.h>
 void repo_save()
 {
-	FILE *i = fopen("descriptionid_tokensid.txt", "r");
-	FILE *oidx = fopen("desc.idx", "w");
-	FILE *odat = fopen("desc.dat", "w");
+	FILE *i = fopen("desc.txt", "r");
+	FILE *oidx = fopen("desc.idx", "wb");
+	FILE *odat = fopen("desc.dat", "wb");
 	char buf[4096 * 1000];
 	char toks[4096*1000];
 	int idx[2] = {0, 0};
@@ -41,6 +41,46 @@ void repo_dump()
 		for(int i=0;i<idx[1];++i)
 			printf("%d%c", x[i], i==idx[1]-1 ? '\n' : '|');
 	}
+}
+
+MMap::MMap(const char* name)
+{
+	idx = fopen((std::string(name) + ".idx").c_str(), "rb");
+	dat = fopen((std::string(name) + ".dat").c_str(), "rb");
+	fseek(idx, 0, SEEK_END);
+	max_id = ftell(idx) / (2*sizeof(int)) - 1;
+}
+
+MMap::~MMap()
+{
+	fclose(idx);
+	fclose(dat);
+}
+
+void MMap::get(int id, Ivector& res)
+{
+	res.clear();
+	if (id > max_id)return;
+	fseek(idx, id*sizeof(int)*2, SEEK_SET);
+	int buf[2];
+	fread(buf, sizeof(int), 2, idx);
+	res.resize(buf[1]);
+	if (res.empty())return;
+	fseek(dat, buf[0]*sizeof(int), SEEK_SET);
+	fread(&res.front(), sizeof(int), buf[1], dat); 
+}
+
+void test_mmap()
+{
+	MMap f("desc");
+	Ivector v;
+	f.get(99, v);
+	for(size_t i=0;i<v.size();++i)
+		printf("%d|", v[i]);
+	printf("\n");
+	f.get(100, v);
+	for(size_t i=0;i<v.size();++i)
+		printf("%d|", v[i]);
 }
 
 void test_parse()
