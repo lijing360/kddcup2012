@@ -3,9 +3,10 @@
 using namespace dlib;
 int main()
 {
+	//test_parse();
 	//sample_parse();
 	//sample_split();
-	//NaiveBay().run();
-	repo_dump();
+	NaiveBay().run_test();
+	//repo_dump();
 	return 0;
 }

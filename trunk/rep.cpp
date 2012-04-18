@@ -43,6 +43,25 @@ void repo_dump()
 	}
 }
 
+void test_parse()
+{
+	FILE *i = fopen("test.txt", "r");
+	FILE *o = fopen("test.dat", "w");
+	char buf[4096];
+	size_t url, adid, advid, depth, pos, qid, kv, title, desc, uid;
+	while(fgets(buf, sizeof buf, i))
+	{
+		sscanf(buf, "%lu\t%lu\t%lu\t%lu\t%lu\t%lu\t%lu\t%lu\t%lu\t%lu", &url, &adid, &advid, &depth, &pos, &qid, &kv, &title, &desc, &uid);
+		T t;
+		t.adid=adid;
+		t.qid=qid;
+		t.uid=uid;
+		fwrite(&t, sizeof(T), 1, o);
+	}
+	fclose(i);
+	fclose(o);
+}
+
 void sample_parse()
 {
 	FILE *i = fopen("sample.txt", "r");
@@ -67,8 +86,8 @@ void sample_parse()
 void sample_split()
 {
 	FILE *i = fopen("sample.dat", "r");
-	FILE *o1 = fopen("train.dat", "w");
-	FILE *o2 = fopen("test.dat", "w");
+	FILE *o1 = fopen("sample.train.dat", "w");
+	FILE *o2 = fopen("sample.test.dat", "w");
 	T t;
 	srand(123);
 	while(1 == fread(&t, sizeof(T), 1, i))
@@ -80,15 +99,31 @@ void sample_split()
 
 void PredictorBase::run()
 {
-	FILE *train = fopen("train.dat", "r");
+	FILE *train = fopen("sample.train.dat", "r");
 	T t;
 	//train
 	while(1 == fread(&t, sizeof(T), 1, train))
 		update(t);	
 	fclose(train);
 	//predict
-	FILE *test = fopen("test.dat", "r");
+	FILE *test = fopen("sample.test.dat", "r");
 	while(1 == fread(&t, sizeof(T), 1, test))
 		printf("%d %d %lf\n", t.click, t.imp, predict(t));
 	fclose(test);
+}
+
+void PredictorBase::run_test()
+{
+	T t;
+
+	FILE *train = fopen("sample.dat", "r");
+	while(1 == fread(&t, sizeof(T), 1, train))
+		update(t);	
+	fclose(train);
+
+	FILE *test = fopen("test.dat", "r");
+	while(1 == fread(&t, sizeof(T), 1, test))
+		printf("%lf\n", predict(t));
+	fclose(test);
+
 }
