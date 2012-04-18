@@ -15,6 +15,7 @@ typedef std::pair<int, int> I2;
 typedef std::map<int, I2> II2;
 
 void sample_parse();
+void test_parse();
 void sample_split();
 void repo_save();
 void repo_dump();
@@ -33,6 +34,7 @@ struct PredictorBase
 	virtual double predict(const T&) = 0;
 	virtual ~PredictorBase(){}
 	void run();
+	void run_test();
 };
 
 #endif
